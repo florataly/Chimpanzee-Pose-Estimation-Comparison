@@ -1,0 +1,210 @@
+
+================================================================================
+Model: oap, Metric: pck_mean
+--------------------------------------------------------------------------------
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:               pck_mean   R-squared:                       0.306
+Model:                            OLS   Adj. R-squared:                  0.217
+Method:                 Least Squares   F-statistic:                     3.440
+Date:                Wed, 16 Apr 2025   Prob (F-statistic):             0.0114
+Time:                        18:33:36   Log-Likelihood:                 34.158
+No. Observations:                  45   AIC:                            -56.32
+Df Residuals:                      39   BIC:                            -45.48
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================
+                              coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+Intercept                   0.6834      0.038     17.767      0.000       0.606       0.761
+C(location)[T.outdoor]     -0.0257      0.056     -0.463      0.646      -0.138       0.087
+C(sun)[T.yes]               0.0081      0.066      0.124      0.902      -0.125       0.141
+C(background)[T.simple]    -0.0947      0.040     -2.394      0.022      -0.175      -0.015
+C(camera_motion)[T.yes]    -0.0056      0.046     -0.121      0.904      -0.098       0.087
+C(clustering)[T.yes]       -0.1016      0.042     -2.447      0.019      -0.186      -0.018
+==============================================================================
+Omnibus:                        1.538   Durbin-Watson:                   1.995
+Prob(Omnibus):                  0.464   Jarque-Bera (JB):                0.700
+Skew:                           0.092   Prob(JB):                        0.705
+Kurtosis:                       3.582   Cond. No.                         6.54
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+================================================================================
+Model: oap, Metric: mpjpe_mean
+--------------------------------------------------------------------------------
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             mpjpe_mean   R-squared:                       0.393
+Model:                            OLS   Adj. R-squared:                  0.315
+Method:                 Least Squares   F-statistic:                     5.040
+Date:                Wed, 16 Apr 2025   Prob (F-statistic):            0.00117
+Time:                        18:33:36   Log-Likelihood:                 27.044
+No. Observations:                  45   AIC:                            -42.09
+Df Residuals:                      39   BIC:                            -31.25
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================
+                              coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+Intercept                   0.2193      0.045      4.868      0.000       0.128       0.310
+C(location)[T.outdoor]      0.0164      0.065      0.252      0.802      -0.115       0.148
+C(sun)[T.yes]               0.0767      0.077      0.998      0.324      -0.079       0.232
+C(background)[T.simple]     0.1196      0.046      2.580      0.014       0.026       0.213
+C(camera_motion)[T.yes]    -0.0095      0.054     -0.177      0.861      -0.118       0.099
+C(clustering)[T.yes]        0.1513      0.049      3.111      0.003       0.053       0.250
+==============================================================================
+Omnibus:                        3.371   Durbin-Watson:                   1.928
+Prob(Omnibus):                  0.185   Jarque-Bera (JB):                1.760
+Skew:                           0.167   Prob(JB):                        0.415
+Kurtosis:                       2.090   Cond. No.                         6.54
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+================================================================================
+Model: oap, Metric: matched_frames
+--------------------------------------------------------------------------------
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:         matched_frames   R-squared:                       0.564
+Model:                            OLS   Adj. R-squared:                  0.508
+Method:                 Least Squares   F-statistic:                     10.10
+Date:                Wed, 16 Apr 2025   Prob (F-statistic):           2.94e-06
+Time:                        18:33:36   Log-Likelihood:                -196.25
+No. Observations:                  45   AIC:                             404.5
+Df Residuals:                      39   BIC:                             415.3
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================
+                              coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+Intercept                  24.1214      6.438      3.747      0.001      11.100      37.143
+C(location)[T.outdoor]    -53.1156      9.299     -5.712      0.000     -71.925     -34.306
+C(sun)[T.yes]              35.7724     10.982      3.257      0.002      13.560      57.985
+C(background)[T.simple]    28.9354      6.624      4.368      0.000      15.538      42.333
+C(camera_motion)[T.yes]    -5.2861      7.684     -0.688      0.496     -20.828      10.256
+C(clustering)[T.yes]       18.8912      6.950      2.718      0.010       4.833      32.949
+==============================================================================
+Omnibus:                        1.029   Durbin-Watson:                   1.932
+Prob(Omnibus):                  0.598   Jarque-Bera (JB):                0.937
+Skew:                           0.335   Prob(JB):                        0.626
+Kurtosis:                       2.772   Cond. No.                         6.54
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+================================================================================
+Model: deepwild, Metric: pck_mean
+--------------------------------------------------------------------------------
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:               pck_mean   R-squared:                       0.500
+Model:                            OLS   Adj. R-squared:                  0.369
+Method:                 Least Squares   F-statistic:                     3.802
+Date:                Wed, 16 Apr 2025   Prob (F-statistic):             0.0148
+Time:                        18:33:36   Log-Likelihood:                 25.293
+No. Observations:                  25   AIC:                            -38.59
+Df Residuals:                      19   BIC:                            -31.27
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================
+                              coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+Intercept                   0.7387      0.043     17.355      0.000       0.650       0.828
+C(location)[T.outdoor]     -0.0086      0.083     -0.104      0.919      -0.183       0.165
+C(sun)[T.yes]              -0.1444      0.122     -1.187      0.250      -0.399       0.110
+C(background)[T.simple]    -0.0001      0.048     -0.003      0.998      -0.100       0.100
+C(camera_motion)[T.yes]    -0.0363      0.059     -0.615      0.546      -0.160       0.087
+C(clustering)[T.yes]       -0.1763      0.049     -3.624      0.002      -0.278      -0.074
+==============================================================================
+Omnibus:                        5.650   Durbin-Watson:                   2.568
+Prob(Omnibus):                  0.059   Jarque-Bera (JB):                3.641
+Skew:                          -0.805   Prob(JB):                        0.162
+Kurtosis:                       3.951   Cond. No.                         9.41
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+================================================================================
+Model: deepwild, Metric: mpjpe_mean
+--------------------------------------------------------------------------------
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             mpjpe_mean   R-squared:                       0.482
+Model:                            OLS   Adj. R-squared:                  0.345
+Method:                 Least Squares   F-statistic:                     3.532
+Date:                Wed, 16 Apr 2025   Prob (F-statistic):             0.0200
+Time:                        18:33:36   Log-Likelihood:                 35.908
+No. Observations:                  25   AIC:                            -59.82
+Df Residuals:                      19   BIC:                            -52.50
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================
+                              coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+Intercept                   0.1976      0.028      7.097      0.000       0.139       0.256
+C(location)[T.outdoor]      0.0416      0.054      0.765      0.454      -0.072       0.155
+C(sun)[T.yes]              -0.0035      0.080     -0.044      0.965      -0.170       0.163
+C(background)[T.simple]    -0.0063      0.031     -0.202      0.842      -0.072       0.059
+C(camera_motion)[T.yes]     0.0714      0.039      1.849      0.080      -0.009       0.152
+C(clustering)[T.yes]        0.1150      0.032      3.616      0.002       0.048       0.182
+==============================================================================
+Omnibus:                        1.144   Durbin-Watson:                   2.420
+Prob(Omnibus):                  0.564   Jarque-Bera (JB):                0.795
+Skew:                           0.428   Prob(JB):                        0.672
+Kurtosis:                       2.824   Cond. No.                         9.41
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+================================================================================
+Model: deepwild, Metric: matched_frames
+--------------------------------------------------------------------------------
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:         matched_frames   R-squared:                       0.091
+Model:                            OLS   Adj. R-squared:                 -0.149
+Method:                 Least Squares   F-statistic:                    0.3793
+Date:                Wed, 16 Apr 2025   Prob (F-statistic):              0.857
+Time:                        18:33:36   Log-Likelihood:                -110.55
+No. Observations:                  25   AIC:                             233.1
+Df Residuals:                      19   BIC:                             240.4
+Df Model:                           5                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================
+                              coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+Intercept                  25.7427      9.747      2.641      0.016       5.341      46.144
+C(location)[T.outdoor]     -0.2427     19.028     -0.013      0.990     -40.069      39.584
+C(sun)[T.yes]              10.1451     27.849      0.364      0.720     -48.143      68.433
+C(background)[T.simple]    -4.4922     10.972     -0.409      0.687     -27.457      18.472
+C(camera_motion)[T.yes]   -16.6528     13.515     -1.232      0.233     -44.939      11.634
+C(clustering)[T.yes]       -4.8670     11.139     -0.437      0.667     -28.181      18.447
+==============================================================================
+Omnibus:                        8.961   Durbin-Watson:                   2.163
+Prob(Omnibus):                  0.011   Jarque-Bera (JB):                7.065
+Skew:                           1.225   Prob(JB):                       0.0292
+Kurtosis:                       3.884   Cond. No.                         9.41
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
