@@ -70,6 +70,22 @@ The file structure should be the follownig (find `data/Ground Truth/demo.csv` fi
  . . .
 ```
 
+## Folder structure
+The demo scripts expect the following folder structure, so please create the missing folders and add the required data in them as described, if you would like to run the demo scripts:
+```
+Chimpanzee-Pose-Estimation-Comparison
+|-- data
+    │-- ground truth
+    |-- TEST
+├-- DLC
+    |--DeepWild1.1
+├-- OpenApePose
+    |-- mmpose
+├-- predictions
+├-- evaluation
+    |-- results
+```
+
  ## Pose estimations
 
  First we run OpenApePose. Example in the terminal:
