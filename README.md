@@ -57,7 +57,7 @@ In Data/TEST the scripts expect to find .mp4 videos or folders with the same nam
 In the Ground Truth folder we expect to see the manually labelled .csv files of each video in DLC style. Please find tools in the /tool folder to convert MMPose json to this format.
 
 The file structure should be the follownig (find `data/Ground Truth/demo.csv` file for reference):
-
+```
 | video name                      |             |
 | individuals                     | individual0 | individual0 | individual0 | individual0 | individual0 | . . . | individual1 | . . .
 | bodyparts                       | hip         | hip         | hip         | right_knee  | right_knee  |       | hip         |
@@ -67,7 +67,8 @@ The file structure should be the follownig (find `data/Ground Truth/demo.csv` fi
 | 000001.jpg                      | 361.742193  | 445.460088  | 2           | 394.369693  | 417.272451  |       | 300.732491  |
 | 000002.jpg                      | 364.044463  | 444.502356  | 2           | 393.183189  | 413.119689  |       | 303.69875   |
 | 000003.jpg                      | 361.878773  | 448.586566  | 2           | 393.183189  | 413.119689  |       | 303.105498  |
- . . . 
+ . . .
+```
 
  ## Pose estimations
 
