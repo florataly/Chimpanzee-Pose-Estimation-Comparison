@@ -2,9 +2,15 @@
 
 ## Installation
 
+First clone this project. NVIDIA GPUs are needed.
+```
+git clone https://github.com/florataly/Chimpanzee-Pose-Estimation-Comparison
+cd Chimpanzee-Pose-Estimation-Comparison
+```
+
 To compare DeppLabCut and MMPose estimations, we need separate environments for each. We recommend using Anaconda virtual environments, as MMPose runs more reliably here.
 
-### MMPose_0.26 Environment
+### MMPose v0.26 Environment
 
 ```
 cd OpenApePose
