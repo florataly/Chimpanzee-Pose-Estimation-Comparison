@@ -36,7 +36,7 @@ cd ..
 
 Run DEMO to confirm successful installation. If you run into trouble installing MMPose, please follow branch v0.26.0 of OpenPose for guidance.
 ```
-conda activate OpenApePose
+conda activate MMPose026
 cd OpenApePose/mmpose
 python demo/top_down_img_demo.py \ 
     configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/hrnet_w48_coco_256x192.py \ 
@@ -92,7 +92,7 @@ Chimpanzee-Pose-Estimation-Comparison
  (please beware, this won't run unless all installations have been successful before)
 ```
 cd OpenApePose
-conda activate OpenApePose
+conda activate MMPose026
 python3
 from mm_pose_processing import MMPose026Processing
 
