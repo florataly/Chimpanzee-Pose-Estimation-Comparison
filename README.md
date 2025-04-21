@@ -2,7 +2,9 @@
 
 ## Installation
 
-First clone this project. NVIDIA GPUs are needed.
+Please note that NVIDIA GPUs are needed for the replication of this project. 
+
+First clone this project:
 ```
 git clone https://github.com/florataly/Chimpanzee-Pose-Estimation-Comparison
 cd Chimpanzee-Pose-Estimation-Comparison
