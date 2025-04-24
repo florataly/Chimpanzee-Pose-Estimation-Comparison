@@ -16,7 +16,10 @@ To compare DeppLabCut and MMPose estimations, we need separate environments for 
 
 ```
 cd OpenApePose
+# on Linux
 conda create -n MMPose026 python=3.8 pytorch=1.10 torchvision -c pytorch –y
+# on Windows
+# conda create -n MMPose026 python=3.8 pytorch=1.10 torchvision -c pytorch
 conda activate MMPose026
 
 pip install openmim==0.3.3
@@ -51,8 +54,9 @@ cd ../..
 Follow the installation guides of OpenApePose to be able to use their model. This requires the download of their model weights and codes and placement of these into the correct folders within MMPose.
 
 ### DeepLabCut Environment
-Follow the installation guides of (DeepLabCut)[https://deeplabcut.github.io/DeepLabCut/docs/installation.html].
-For DeepWild, please follow the google drive link shared on (DeepWild)[https://github.com/Wild-Minds/DeepWild]'s repository. Then place the downloaded file to the DLC folder.
+Follow the installation guides of [DeepLabCut](https://deeplabcut.github.io/DeepLabCut/docs/installation.html).
+
+For DeepWild, please follow the google drive link shared on [DeepWild](https://github.com/Wild-Minds/DeepWild)'s repository. Then place the downloaded file to the DLC folder.
 
 ## Data
 In Data/TEST the scripts expect to find .mp4 videos or folders with the same name as the .mp4 video files, including the frames of the video. \\
