@@ -2,7 +2,7 @@
 
 ## Installation
 
-Please note that NVIDIA GPUs are needed for the replication of this project. 
+Please note that NVIDIA GPUs are needed for the replication of this project.
 
 First clone this project:
 ```
@@ -16,16 +16,17 @@ To compare DeppLabCut and MMPose estimations, we need separate environments for 
 
 ```
 cd OpenApePose
-# on Linux
-conda create -n MMPose026 python=3.8 pytorch=1.10 torchvision -c pytorch –y
-# on Windows
-# conda create -n MMPose026 python=3.8 pytorch=1.10 torchvision -c pytorch
+conda create -n MMPose026 python=3.8 pytorch=1.10 cudatoolkit=11.3 torchvision -c pytorch -y
 conda activate MMPose026
 
-pip install openmim==0.3.3
+pip install -U openmim==0.3.3
 pip install numpy==1.24
 pip install mmcv-full==1.6.0 -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.10.0/index.html
 mim install mmdet== 2.25.0
+
+git clone --branch v0.26.0 https://github.com/open-mmlab/mmpose.git 
+cd mmpose
+pip install -e .
 
 pip install matplotlib==3.7
 pip install pillow==9.3.0
@@ -33,9 +34,6 @@ pip install xtcocotools==1.13
 pip install tomli==2.0.1
 pip install platformdirs==3.5.1
 
-git clone --branch v0.26.0 https://github.com/open-mmlab/mmpose.git 
-cd mmpose
-pip install -e .
 cd ..
 ```
 
@@ -51,33 +49,15 @@ python demo/top_down_img_demo.py \
 cd ../..
 ```
 
-Follow the installation guides of OpenApePose to be able to use their model. This requires the download of their model weights and codes and placement of these into the correct folders within MMPose.
+Follow the installation guides of [OpenApePose](https://github.com/desai-nisarg/OpenApePose) to be able to use their model. This requires the download of their model weights and codes and placement of these into the correct folders within the mmpose folder we created.
 
 ### DeepLabCut Environment
 Follow the installation guides of [DeepLabCut](https://deeplabcut.github.io/DeepLabCut/docs/installation.html).
 
 For DeepWild, please follow the google drive link shared on [DeepWild](https://github.com/Wild-Minds/DeepWild)'s repository. Then place the downloaded file to the DLC folder.
 
-## Data
-In Data/TEST the scripts expect to find .mp4 videos or folders with the same name as the .mp4 video files, including the frames of the video. \\
-In the Ground Truth folder we expect to see the manually labelled .csv files of each video in DLC style. Please find tools in the /tool folder to convert MMPose json to this format.
-
-The file structure should be the follownig (find `data/Ground Truth/demo.csv` file for reference):
-```
-| video name                      |             |
-| individuals                     | individual0 | individual0 | individual0 | individual0 | individual0 | . . . | individual1 | . . .
-| bodyparts                       | hip         | hip         | hip         | right_knee  | right_knee  |       | hip         |
-| coords                          | x           | y           | visibility  | x           | y           |       | x           | 
-|---------------------------------|-------------|-------------|-------------|-------------|-------------|       |-------------| 
-| 000000.jpg                      | 359.912045  | 444.159332  | 2           | 393.514307  | 416.417065  |       | 301.560284  |
-| 000001.jpg                      | 361.742193  | 445.460088  | 2           | 394.369693  | 417.272451  |       | 300.732491  |
-| 000002.jpg                      | 364.044463  | 444.502356  | 2           | 393.183189  | 413.119689  |       | 303.69875   |
-| 000003.jpg                      | 361.878773  | 448.586566  | 2           | 393.183189  | 413.119689  |       | 303.105498  |
- . . .
-```
-
 ## Folder structure
-The demo scripts expect the following folder structure, so please create the missing folders and add the required data in them as described, if you would like to run the demo scripts:
+The demo scripts expect the following folder structure, so please create the missing folders and add the required data, if you wish to run the demo scripts:
 ```
 Chimpanzee-Pose-Estimation-Comparison
 |-- data
@@ -92,10 +72,29 @@ Chimpanzee-Pose-Estimation-Comparison
     |-- results
 ```
 
+## Data
+In Data/TEST the scripts expect to find .mp4 videos or folders with the same name as the .mp4 video files, including the frames of the video. \\
+In the Ground Truth folder we expect to see the manually labelled .csv files of each video in DLC style. Please find tools in the /tool folder to convert json files to this format.
+
+The csv structure should be the follownig (find `data/Ground Truth/demo.csv` file for reference):
+```
+| video name                      |             |
+| individuals                     | individual0 | individual0 | individual0 | individual0 | individual0 | . . . | individual1 | . . .
+| bodyparts                       | hip         | hip         | hip         | right_knee  | right_knee  |       | hip         |
+| coords                          | x           | y           | visibility  | x           | y           |       | x           | 
+|---------------------------------|-------------|-------------|-------------|-------------|-------------|       |-------------| 
+| 000000.jpg                      | 359.912045  | 444.159332  | 2           | 393.514307  | 416.417065  |       | 301.560284  |
+| 000001.jpg                      | 361.742193  | 445.460088  | 2           | 394.369693  | 417.272451  |       | 300.732491  |
+| 000002.jpg                      | 364.044463  | 444.502356  | 2           | 393.183189  | 413.119689  |       | 303.69875   |
+| 000003.jpg                      | 361.878773  | 448.586566  | 2           | 393.183189  | 413.119689  |       | 303.105498  |
+ . . .
+```
+
  ## Pose estimations
 
- First we run OpenApePose. Example in the terminal:
- (please beware, this won't run unless all installations have been successful before)
+### OpenApePose
+ First we run OpenApePose on folders containing frames of a video. Example usage in the terminal:
+ (please beware, this won't run unless all installations have been successful)
 ```
 cd OpenApePose
 conda activate MMPose026
@@ -114,11 +113,11 @@ inferencer.run()
 exit()
 cd ..
 ```
-Personally, I suggest using Jupyter notebook for running the inferencers rather than in the terminal. Please find detailed explanation of each function in the MMpose_procressing.ipynb file.
+Personally, I suggest using Jupyter notebook. Please find detailed explanation of each function in the OpenApePose/MMpose_procressing.ipynb file.
 
-
-Then we process DLC. Example in the terminal:
-(please beware, this won't run unless all installations have been successful before)
+### DeepWild
+Second, we process the .mp4 videos with DeepWild. Example usage in the terminal:
+(please beware, this won't run unless all installations have been successful)
 ```
 cd DLC
 conda activate DEEPLABCUT
@@ -138,7 +137,7 @@ cd ..
 ```
 
 ## Evaluation
-The evaluation should be able to run in the DLC environment. The resulting files should include an individual .csv file for each video separately, a summary csv when save_summary is True, regression_results.txt if environmental factors have been taken into consideration, and images of the distributions of PCK, MPJPE and matched frames for each model. 
+The evaluation scripts can be run in the DLC environment, if the additional packages have been installed as described above. The resulting files should include an individual .csv file for each video separately, a summary csv when save_summary is True, regression_results.txt if environmental factors have been taken into consideration, and images of the distributions of PCK, MPJPE and matched frames for each model. Please find a demo of these files in the 'demo results' folder.
 Example usage in the terminal:
 ```
 cd evluation
