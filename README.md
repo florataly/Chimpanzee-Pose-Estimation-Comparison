@@ -56,6 +56,11 @@ Follow the installation guides of [DeepLabCut](https://deeplabcut.github.io/Deep
 
 For DeepWild, please follow the google drive link shared on [DeepWild](https://github.com/Wild-Minds/DeepWild)'s repository. Then place the downloaded file to the DLC folder.
 
+If the DLC environment will be used for evaluation as well, the following packages are further required:
+```
+pip install pandas numpy scipy statsmodels matplotlib seaborn
+```
+
 ## Folder structure
 The demo scripts expect the following folder structure, so please create the missing folders and add the required data, if you wish to run the demo scripts:
 ```
