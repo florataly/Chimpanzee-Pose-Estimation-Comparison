@@ -120,18 +120,18 @@ class ComparePoseModels:
                 d = np.linalg.norm([px - gx, py - gy]) # pixel distance
                 distances.append(d)
 
-        if len(distances) == 0: # when there were no valid predictios, returning 1000000
+        if len(distances) == 0: # when there were no valid predictios, returning 1000000 as penalty
             return 1e6
         return np.mean(distances) 
     
     def _mpjpe_scaled(self, pred_dict, gt_dict, neck_hip_dict):
-        # measuring the head bone link in ground truth
+        # measuring the hip-neck distance in ground truth
         neck_x, neck_y = neck_hip_dict['neck']
         hip_x, hip_y = neck_hip_dict['hip']
 
         if not np.isnan(hip_x) and not np.isnan(neck_x):
             neck_hip_d = np.linalg.norm([neck_x-hip_x, neck_y-hip_y])
-        else: # no neck-hip distance in ground truth
+        else: # no hip-neck distance in ground truth
             return 1e6
 
         distances = []
@@ -142,7 +142,7 @@ class ComparePoseModels:
             gx, gy = gt_dict[kp]
             if not np.isnan(px) and not np.isnan(gx):
                 d = np.linalg.norm([px - gx, py - gy]) # pixel distance
-                distances.append(d/neck_hip_d) # pixel distance compared to the head bone link
+                distances.append(d/neck_hip_d) # pixel distance compared to the hip-neck distance
 
         if len(distances) == 0: # when there were no valid predictios, returning 1000000
             return 1e6
@@ -167,13 +167,13 @@ class ComparePoseModels:
             return None
         return correct / total
     
-    def _pck_scaled(self, pred_dict, gt_dict, neck_hip_dict, threshold=0.5): # default treshold is 50% of head bone link
-        # measuring the head bone link in ground truth
+    def _pck_scaled(self, pred_dict, gt_dict, neck_hip_dict, threshold=0.5): # default treshold is 50% of hip-neck distance
+        # measuring the hip-neck distance in ground truth
         neck_x, neck_y = neck_hip_dict['neck']
         hip_x, hip_y = neck_hip_dict['hip']
         if not np.isnan(hip_x) and not np.isnan(neck_x):
             neck_hip_d = np.linalg.norm([neck_x-hip_x, neck_y-hip_y])
-        else: # no neck-hip distance
+        else: # no hip-neck distance
             return None
         
         correct = 0
@@ -186,7 +186,7 @@ class ComparePoseModels:
             if not np.isnan(px) and not np.isnan(gx):
                 d = np.linalg.norm([px - gx, py - gy])
                 total += 1
-                if d <= (threshold*neck_hip_d): # is the distance smaller than 'treshold'% of head bone link?
+                if d <= (threshold*neck_hip_d): # is the distance smaller than 'treshold'% of hip-neck distance
                     correct += 1
 
         if total == 0:
@@ -250,13 +250,13 @@ class ComparePoseModels:
                 pred = pred_inds[r]
                 gt = gt_inds[c]
 
-                if self.scale: # scaling to head bone link
+                if self.scale: # scaling to hip-neck distance
                     mpjpe_score = self._mpjpe_scaled(pred_dict=pred, gt_dict=gt, neck_hip_dict=neck_hip_inds[c])
                     if self.pck_treshold:
                         pck_score = self._pck_scaled(pred_dict=pred, gt_dict=gt, neck_hip_dict=neck_hip_inds[c], threshold=self.pck_treshold)
                     else:
                         pck_score = self._pck_scaled(pred_dict=pred, gt_dict=gt, neck_hip_dict=neck_hip_inds[c])
-                else: # not scaling to head bone link
+                else: # not scaling to hip-neck distance
                     mpjpe_score = self._mpjpe(pred_dict=pred, gt_dict=gt)
                     if self.pck_treshold:
                         pck_score = self._pck(pred_dict=pred, gt_dict=gt, threshold=self.pck_treshold)
@@ -382,7 +382,6 @@ class ComparePoseModels:
                 })
 
             # Compute summary metrics
-
             pck_mean = df['pck'].mean()
             mpjpe_mean = df['mpjpe'].mean()
             matched_frames = len(df)
