@@ -12,7 +12,7 @@ cd Chimpanzee-Pose-Estimation-Comparison
 
 To compare DeppLabCut and MMPose estimations, we need separate environments for each. We recommend using Anaconda virtual environments, as MMPose runs more reliably here.
 
-### (MMPose v0.26)[https://github.com/open-mmlab/mmpose/tree/v0.26.0] Environment
+### [MMPose v0.26](https://github.com/open-mmlab/mmpose/tree/v0.26.0) Environment
 
 ```
 cd OpenApePose
