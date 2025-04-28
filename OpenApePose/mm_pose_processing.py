@@ -19,7 +19,6 @@ class MMPose026Processing:
     def __init__(
         self,
         pose_config_path: str,
-        pose_checkpoint_path: str,
         root_dir: str,
         model: str,
         output_dir: str = None,
@@ -27,8 +26,9 @@ class MMPose026Processing:
         visualization: bool = False,
         single_folder: bool = False,
         process_every_n: int = None,
+        pose_checkpoint_path: str = './mmpose/checkpoints/hrnet_w48_oap_256x192_full.pth',
         det_config_path: str = './mmpose/demo/mmdetection_cfg/faster_rcnn_r50_fpn_coco.py',
-        det_checkpoint_path: str = './mmpose/checkpoints/mmdet/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth'
+        det_checkpoint_path: str = 'https://download.openmmlab.com/mmpose/top_down/hrnet/hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth'
     ):
         """
         pose_config_path: path to the config files
