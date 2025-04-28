@@ -36,6 +36,7 @@ pip install -v -e .
 
 pip install tomli==2.0.1
 pip install platformdirs==3.5.1
+pip install tqdm
 
 cd ..
 ```
