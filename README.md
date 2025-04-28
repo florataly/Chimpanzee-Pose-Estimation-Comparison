@@ -12,25 +12,28 @@ cd Chimpanzee-Pose-Estimation-Comparison
 
 To compare DeppLabCut and MMPose estimations, we need separate environments for each. We recommend using Anaconda virtual environments, as MMPose runs more reliably here.
 
-### MMPose v0.26 Environment
+### (MMPose v0.26)[https://github.com/open-mmlab/mmpose/tree/v0.26.0] Environment
 
 ```
 cd OpenApePose
+
 conda create -n MMPose026 python=3.8 pytorch=1.10 cudatoolkit=11.3 torchvision -c pytorch -y
 conda activate MMPose026
 
-pip install -U openmim==0.3.3
-pip install numpy==1.24
-pip install mmcv-full==1.6.0 -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.10.0/index.html
-mim install mmdet== 2.25.0
+pip install openmim==0.3.3
+mim install mmcv-full==1.6.0
 
-git clone --branch v0.26.0 https://github.com/open-mmlab/mmpose.git 
+git clone --branch v0.26.0 https://github.com/open-mmlab/mmpose.git
 cd mmpose
 pip install -e .
 
-pip install matplotlib==3.7
-pip install pillow==9.3.0
-pip install xtcocotools==1.13
+cd ..
+
+# the old version of mmdet could be installed using 'mim', but it can crash out easily, so I'm installing from source
+git clone --branch v2.25.0 https://github.com/open-mmlab/mmdetection.git 
+cd mmdetection
+pip install -v -e .
+
 pip install tomli==2.0.1
 pip install platformdirs==3.5.1
 
