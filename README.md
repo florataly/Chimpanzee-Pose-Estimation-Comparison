@@ -40,15 +40,11 @@ pip install platformdirs==3.5.1
 cd ..
 ```
 
-Run DEMO to confirm successful installation. If you run into trouble installing MMPose, please follow branch v0.26.0 of OpenPose for guidance.
+Run DEMO to confirm successful installation, the demo images should appear in mmpose/vis_results folder. If you run into trouble installing MMPose, please follow branch v0.26.0 of OpenPose for guidance.
 ```
 conda activate MMPose026
 cd OpenApePose/mmpose
-python demo/top_down_img_demo.py \ 
-    configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/hrnet_w48_coco_256x192.py \ 
-    https://download.openmmlab.com/mmpose/top_down/hrnet/hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth \ 
-    --img-root tests/data/coco/ --json-file tests/data/coco/test_coco.json \ 
-    --out-img-root vis_results
+python demo/top_down_img_demo.py configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/hrnet_w48_coco_256x192.py https://download.openmmlab.com/mmpose/top_down/hrnet/hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth --img-root tests/data/coco/ --json-file tests/data/coco/test_coco.json --out-img-root vis_results
 cd ../..
 ```
 
