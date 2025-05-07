@@ -12,6 +12,8 @@ from mmpose.apis import (
 from mmdet.apis import init_detector, inference_detector
 from pathlib import Path
 from tqdm import tqdm
+from torchvision.ops import nms
+import torch
 
 
 
@@ -28,6 +30,7 @@ class MMPose026Processing:
         process_every_n: int = None,
         pose_checkpoint_path: str = './mmpose/checkpoints/hrnet_w48_oap_256x192_full.pth',
         det_config_path: str = './mmpose/demo/mmdetection_cfg/faster_rcnn_r50_fpn_coco.py',
+            # checkpoint file from https://github.com/open-mmlab/mmdetection/blob/v2.26.0/demo/inference_demo.ipynb
         det_checkpoint_path: str = 'https://download.openmmlab.com/mmpose/top_down/hrnet/hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth'
     ):
         """
@@ -157,6 +160,19 @@ class MMPose026Processing:
             pose_results, _ = inference_top_down_pose_model(
                 self.pose_model, img_path, animal_results, bbox_thr=0.3, format='xyxy',
                 dataset=self.pose_model.cfg.data.test.type)
+            
+            # non-maximum suppression (remove high Itersection over Union boxes)
+            boxes = []
+            scores = []
+            for i in range(len(pose_results)):
+                boxes.append(pose_results[i]['bbox'][:4].tolist())
+                scores.append(pose_results[i]['bbox'][4])
+
+            boxes = torch.tensor(boxes)
+            scores = torch.tensor(scores)
+
+            keep = nms(boxes, scores, iou_threshold = 0.85) # IoU threshold can be changed
+            pose_results = [pose_results[i] for i in keep.tolist()]
 
             # if there are no results, we create empty results for one animal
             if not pose_results:
