@@ -72,6 +72,8 @@ Chimpanzee-Pose-Estimation-Comparison
     |--DeepWild1.1
 ├-- OpenApePose
     |-- mmpose
+        |--checkpoints
+        |-- ...
 ├-- predictions
 ├-- evaluation
     |-- results
