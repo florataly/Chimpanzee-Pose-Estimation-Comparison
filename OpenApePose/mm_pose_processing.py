@@ -31,7 +31,7 @@ class MMPose026Processing:
         pose_checkpoint_path: str = './mmpose/checkpoints/hrnet_w48_oap_256x192_full.pth',
         det_config_path: str = './mmpose/demo/mmdetection_cfg/faster_rcnn_r50_fpn_coco.py',
             # checkpoint file from https://github.com/open-mmlab/mmdetection/blob/v2.26.0/demo/inference_demo.ipynb
-        det_checkpoint_path: str = 'https://download.openmmlab.com/mmpose/top_down/hrnet/hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth'
+        det_checkpoint_path: str = 'https://download.openmmlab.com/mmdetection/v2.0/faster_rcnn/faster_rcnn_r50_fpn_1x_coco/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth'
     ):
         """
         pose_config_path: path to the config files
