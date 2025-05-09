@@ -578,7 +578,7 @@ class ComparePoseModels:
             ax.text(i + 0.05, mean, f'{mean:.1f}', ha='left', va='center', fontsize=18, color=dark_colour)
         
             # Video count label under model name
-            ax.text(i, -0.125 * df['matched_frames'].max(), f'n={video_counts[model]}',
+            ax.text(i, -0.150 * df['matched_frames'].max(), f'n={video_counts[model]}',
                     ha='center', va='top', fontsize=16, color='black')
         
         # Plot aesthetics
