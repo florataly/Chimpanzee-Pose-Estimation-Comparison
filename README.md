@@ -66,7 +66,7 @@ The demo scripts expect the following folder structure, so please create the mis
 ```
 Chimpanzee-Pose-Estimation-Comparison
 |-- data
-    │-- ground truth
+    │-- ground_truth
     |-- TEST
 ├-- DLC
     |--DeepWild1.1
