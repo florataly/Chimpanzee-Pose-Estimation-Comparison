@@ -171,8 +171,9 @@ class MMPose026Processing:
             boxes = torch.tensor(boxes)
             scores = torch.tensor(scores)
 
-            keep = nms(boxes, scores, iou_threshold = 0.85) # IoU threshold can be changed
-            pose_results = [pose_results[i] for i in keep.tolist()]
+            if boxes.dim()==2:
+                keep = nms(boxes, scores, iou_threshold = 0.85) # IoU threshold can be changed
+                pose_results = [pose_results[i] for i in keep.tolist()]
 
             # if there are no results, we create empty results for one animal
             if not pose_results:
