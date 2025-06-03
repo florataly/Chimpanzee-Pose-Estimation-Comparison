@@ -4,7 +4,10 @@
 
 Please note that NVIDIA GPUs are needed for the replication of this project.
 
-First clone this project:
+For Linux users, please download the isntallation shell script, and run it by:
+`bash linux_install.sh`
+
+For step by step installation, first clone this project:
 ```
 git clone https://github.com/florataly/Chimpanzee-Pose-Estimation-Comparison
 cd Chimpanzee-Pose-Estimation-Comparison
