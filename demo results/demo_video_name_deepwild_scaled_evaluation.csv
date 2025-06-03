@@ -1,5 +1,5 @@
-deepwild
-Azibo_ObsChimp_2015_11_25_d_clip_5000_6000
+deepwild,,,,
+Azibo_ObsChimp_2015_11_25_d_clip_5000_6000,,,,
 frame,predicted_individual_index,ground_truth_individual_index,mpjpe,pck
 000000.jpg,0,1,0.28185449243304816,0.75
 000010.jpg,0,1,0.24604452903501972,0.6666666666666666
