@@ -20,24 +20,26 @@ class ComparePoseModels:
         gt_dir: str,
         output_dir: str = None,
         single_file: bool = False,
-        pck_treshold: int = None,
-        scale: bool = True
-
+        pck_threshold: int = None,
+        scale: bool = True,
+        confidence: float = 0.4
     ):
         """
         predictions_dir: folder where prediction results are. if single_file is true, then path to specific CSV
         gt_dir: folder where ground truth CSVs are. if single_file is true, then path to specific CSV
         output_dir: folder where evaluation results will be stored. defaults to prediction_dir
         single_file: True when there is a single file that needs evaluating. if True, prediction and gt directories need to point to the specific file. defaults to False
-        pck_treshold: treshold of how close the prediction needs to be to the ground truth to count as correct prediction. when scale = False defaults to 10 pixels, when scale = True defaults to 0.5 (= 50%) of head bone link
+        pck_threshold: threshold of how close the prediction needs to be to the ground truth to count as correct prediction. when scale = False defaults to 10 pixels, when scale = True defaults to 0.125 (= 12.5%) of head bone link
         scale: True when evaluation measures with respect to the scale of the subject. False when evaluation measures with predefined pixel distance. defaults to True
+        confidence: required minimum confidence threshold of the predictions. Defaults to '0.4'
         """
         self.predictions_dir = predictions_dir
         self.gt_dir = gt_dir
         self.output_dir = output_dir or predictions_dir
         self.single_file = single_file
-        self.pck_treshold = pck_treshold
+        self.pck_threshold = pck_threshold
         self.scale = scale
+        self.confidence = confidence
 
         # checking whether input/output folders exist
         if not os.path.isdir(self.predictions_dir):
@@ -57,7 +59,7 @@ class ComparePoseModels:
             lines = lines[1:]
 
         
-        # videoname from [1]
+        # video_name from [1]
         video_name = lines[0].strip().split(',')[0]
 
         # headers
@@ -101,7 +103,7 @@ class ComparePoseModels:
                     x = frame_data[(ind, kp, 'x')].values[0]
                     y = frame_data[(ind, kp, 'y')].values[0]
                     score_or_vis = frame_data[(ind, kp, field_name)].values[0]
-                    valid = score_or_vis > 0.1 # confidence must be over 0.1
+                    valid = score_or_vis > self.confidence # filtering for confidence threshold
                     kp_coords[kp] = (x, y) if valid else (np.nan, np.nan)
                 except KeyError:
                     continue # no valid keypoint present
@@ -149,7 +151,7 @@ class ComparePoseModels:
         return np.mean(distances) 
     
     # === Percentage of Correct Keypoints (PCK): % of shared keypoints within 10px of GT ===
-    def _pck(self, pred_dict, gt_dict, threshold=10.0): # default treshold is 10 pixels
+    def _pck(self, pred_dict, gt_dict, threshold=10.0): # default threshold is 10 pixels
         correct = 0
         total = 0
         shared_kps = set(pred_dict.keys()) & set(gt_dict.keys())
@@ -166,8 +168,9 @@ class ComparePoseModels:
         if total == 0:
             return None
         return correct / total
-    
-    def _pck_scaled(self, pred_dict, gt_dict, neck_hip_dict, threshold=0.5): # default treshold is 50% of hip-neck distance
+
+    # scaled PCK default threshold is 12.5% of hip-neck distance
+    def _pck_scaled(self, pred_dict, gt_dict, neck_hip_dict, threshold=0.125): 
         # measuring the hip-neck distance in ground truth
         neck_x, neck_y = neck_hip_dict['neck']
         hip_x, hip_y = neck_hip_dict['hip']
@@ -186,7 +189,7 @@ class ComparePoseModels:
             if not np.isnan(px) and not np.isnan(gx):
                 d = np.linalg.norm([px - gx, py - gy])
                 total += 1
-                if d <= (threshold*neck_hip_d): # is the distance smaller than 'treshold'% of hip-neck distance
+                if d <= (threshold*neck_hip_d): # is the distance smaller than 'threshold'% of hip-neck distance
                     correct += 1
 
         if total == 0:
@@ -252,14 +255,14 @@ class ComparePoseModels:
 
                 if self.scale: # scaling to hip-neck distance
                     mpjpe_score = self._mpjpe_scaled(pred_dict=pred, gt_dict=gt, neck_hip_dict=neck_hip_inds[c])
-                    if self.pck_treshold:
-                        pck_score = self._pck_scaled(pred_dict=pred, gt_dict=gt, neck_hip_dict=neck_hip_inds[c], threshold=self.pck_treshold)
+                    if self.pck_threshold:
+                        pck_score = self._pck_scaled(pred_dict=pred, gt_dict=gt, neck_hip_dict=neck_hip_inds[c], threshold=self.pck_threshold)
                     else:
                         pck_score = self._pck_scaled(pred_dict=pred, gt_dict=gt, neck_hip_dict=neck_hip_inds[c])
                 else: # not scaling to hip-neck distance
                     mpjpe_score = self._mpjpe(pred_dict=pred, gt_dict=gt)
-                    if self.pck_treshold:
-                        pck_score = self._pck(pred_dict=pred, gt_dict=gt, threshold=self.pck_treshold)
+                    if self.pck_threshold:
+                        pck_score = self._pck(pred_dict=pred, gt_dict=gt, threshold=self.pck_threshold)
                     else:
                         pck_score = self._pck(pred_dict=pred, gt_dict=gt)
 
@@ -272,14 +275,13 @@ class ComparePoseModels:
         print(f"Evaluated {valid_frames} frames with usable predictions.")
         return results, video_name
     
-    def _export_matches_to_csv(self, results, model, videoname):
-        output_dir = Path(self.output_dir)
+    def _export_matches_to_csv(self, results, model, video_name):
 
         # evaluation file name
         if self.scale:
-            output_file = output_dir / f"{videoname}_{model}_scaled_evaluation.csv"
+            output_file = os.path.join(self.output_dir, f"{video_name}_{model}_scaled{str(self.pck_threshold).replace('.','')}PCK_evaluation.csv")
         else:
-            output_file = output_dir / f"{videoname}_{model}_evaluation.csv"
+            output_file = os.path.join(self.output_dir, f"{video_name}_{model}_{str(self.pck_threshold).replace('.','')}PCK_evaluation.csv")
 
         rows = []
         for frame_result in results:
@@ -306,7 +308,7 @@ class ComparePoseModels:
 
         # header
         header_0 = [model]
-        header_1 = [videoname]
+        header_1 = [video_name]
 
         with open(output_file, 'w', newline='') as f:
             writer = csv.writer(f)
@@ -339,14 +341,27 @@ class ComparePoseModels:
             
             gt_file = next(gt_dir.glob(f"*{video_name}*.csv"), None)
 
+            # skipping empty GT files
             if gt_file is None or not gt_file.exists():
                 print(f"Ground truth file not found for: {video_name}")
+                continue
+                
+            ## skipping files that already exist
+            if self.scale:
+                output_file = os.path.join(self.output_dir, f"{video_name}_{model}_scaled{str(self.pck_threshold).replace('.','')}PCK_evaluation.csv")
+            else:
+                output_file = os.path.join(self.output_dir, f"{video_name}_{model}_{str(self.pck_threshold).replace('.','')}PCK_evaluation.csv")
+            if os.path.isfile(output_file):
+                print(f"File '{output_file}' already exists, skipping evaluation!")
                 continue
 
             print(f"Evaluating video: {video_name}, model: {model}")
             try:
-                results, videoname = self._evaluate(pred_file, gt_file)
-                self._export_matches_to_csv(results, model, videoname)
+                results, video_name = self._evaluate(pred_file, gt_file)
+                if len(results) == 0:
+                    print('No frames to evaluate, skipping video!')
+                    continue
+                self._export_matches_to_csv(results, model, video_name)
             except Exception as e:
                 print(f"Error evaluating {video_name}: {e}")
 
@@ -525,10 +540,10 @@ class ComparePoseModels:
             plt.show()
 
 
-        if self.pck_treshold and self.scale:
-            plot_all_distribution(df_individual, "pck", f"PCK (< {self.pck_treshold *100}%)")
-        elif self.pck_treshold and not self.scale:
-            plot_all_distribution(df_individual, "pck", f"PCK (< {self.pck_treshold} pixels)")
+        if self.pck_threshold and self.scale:
+            plot_all_distribution(df_individual, "pck", f"PCK (< {self.pck_threshold *100}%)")
+        elif self.pck_threshold and not self.scale:
+            plot_all_distribution(df_individual, "pck", f"PCK (< {self.pck_threshold} pixels)")
         elif self.scale:
             plot_all_distribution(df_individual, "pck", f"PCK (< 50%)")
         else:
